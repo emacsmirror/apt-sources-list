@@ -44,6 +44,7 @@
 
 ;;; Code:
 
+(require 'cl-lib)
 (require 'subr-x)
 (eval-when-compile
   (require 'rx))
@@ -133,7 +134,10 @@ single “%s” which will be replaced with the source name."
      (5 'apt-sources-list-components t t)))
   "Faces for parts of sources.list lines.")
 
-(defun apt-sources-list-insert (uri &rest properties)
+(cl-defun apt-sources-list-insert
+    (uri &key name (type "deb") options
+         (suite (car apt-sources-list-suites))
+         (components (car apt-sources-list-components)))
   "Insert a new package source at URI, with extra PROPERTIES.
 
 When called interactively without a prefix argument, assume
@@ -169,22 +173,11 @@ explanation of the format."
            :options (unless (string-blank-p options) options)
            :suite suite :components components)))
 
-  (insert (let ((name (plist-get properties :name)))
-            (if name
-                (concat (format apt-sources-list-name-format name) "\n")
-              ""))
-          (or (plist-get properties :type) "deb")
-          (let ((options (plist-get properties :options)))
-            (if options (format " [%s] " options) " "))
-          uri
-          " "
-          (or (plist-get properties :suite)
-              (car apt-sources-list-suites))
-          (if (string-suffix-p "/" (or (plist-get properties :suite)
-                                       (car apt-sources-list-suites)))
-              ""
-            (format " %s" (or (plist-get properties :components)
-                              (car apt-sources-list-components))))))
+  (when name
+    (insert (format apt-sources-list-name-format name) "\n"))
+  (insert type (if options (format " [%s] " options) " ") uri " "
+          suite (if (string-suffix-p "/" suite) ""
+                  (format " %s" components))))
 
 (defun apt-sources-list-forward-source (&optional n)
   "Go N source lines forward (backward if N is negative)."
