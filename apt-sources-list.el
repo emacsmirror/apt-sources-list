@@ -138,18 +138,18 @@ single “%s” which will be replaced with the source name."
     (uri &key name (type "deb") options
          (suite (car apt-sources-list-suites))
          (components (car apt-sources-list-components)))
-  "Insert a new package source at URI, with extra PROPERTIES.
+  "Insert a new package source at URI.
 
 When called interactively without a prefix argument, assume
 the type is “deb” and no special options.
 
-When called from Lisp, optional properties include:
+When called from Lisp, optional arguments include:
 
-‘:name’ - a source name to include in a leading comment
-‘:type’ - “deb” or “deb-src”, defaulting to “deb”
-‘:options’ - an options string, without […] delimiters
-‘:suite’ - defaults to the first of ‘apt-sources-list-suites’
-‘:components’ - defaults to the first of ‘apt-sources-list-components’
+NAME - a source name to include in a leading comment
+TYPE - “deb” or “deb-src”, defaulting to “deb”
+OPTIONS - an options string, without […] delimiters
+SUITE - defaults to the first item of ‘apt-sources-list-suites’
+COMPONENTS - defaults to the first item of ‘apt-sources-list-components’
 
 You should read the official APT documentation for further
 explanation of the format."
