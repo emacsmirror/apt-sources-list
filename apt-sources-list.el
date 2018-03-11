@@ -362,6 +362,7 @@ is not a correctly-formatted APT source."
   (setq-local comment-start-skip "#+ *")
   (font-lock-add-keywords nil apt-sources-list-font-lock-keywords))
 
+;;;###autoload
 (add-to-list
  'auto-mode-alist
  (cons (rx (or (and (any "./") "sources.list")
