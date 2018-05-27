@@ -144,7 +144,7 @@ deb http://deb.test/debian stable main"
     (should-be-at-line 4)
     (type "C-M-p")
     (should-be-at-line 1)
-    
+
     (should-error (type "C-M-p"))
     (should-error (type "C-u 2 C-M-n"))))
 
@@ -165,6 +165,6 @@ deb http://deb.test/debian stable main"
     (should-use-face 'font-lock-comment-delimiter-face)
     (search-forward "b")
     (should-use-face 'font-lock-comment-face)))
-                  
-   
+
+
 ;;; apt-sources-list-test.el ends here
