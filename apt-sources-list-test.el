@@ -125,6 +125,13 @@ deb-src http://deb.test/debian stable main")))
     (type "C-c C-s stable RET")
     (should-equal-buffer "deb http://deb.test/debian stable xxx # foo")))
 
+(ert-deftest apt-sources-list-test-change-suite-empty ()
+  (with-apt-sources-list "deb http://deb.test/debian stable main # foo"
+    (type "C-c C-s / RET")
+    (should-equal-buffer "deb http://deb.test/debian / # foo")
+    (type "C-c C-s unstable RET M-0 C-k xxx RET")
+    (should-equal-buffer "deb http://deb.test/debian unstable xxx # foo")))
+
 (ert-deftest apt-sources-list-test-change-components ()
   (with-apt-sources-list "deb http://deb.test/debian stable main # foo"
     (type "C-c C-c M-0 C-k a SPC b")

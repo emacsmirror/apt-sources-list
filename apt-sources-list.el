@@ -112,7 +112,7 @@ single “%s” which will be replaced with the source name."
        (one-or-more (not (any " \t\n#"))))
       (one-or-more blank)
       (group
-       (or (and (one-or-more (not (any " \t\n#"))) "/")
+       (or (and (zero-or-more (not (any " \t\n#"))) "/")
            (and (zero-or-more (not (any " \t\n#")))
                 (not (any " \t\n/#"))
                 (one-or-more blank)
